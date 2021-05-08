@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Group?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="mainPageAnchorPane" prefHeight="540.0" prefWidth="960.0" style="-fx-background-color: #292929;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainPageController">
+   <children>
+      <AnchorPane prefHeight="540.0" prefWidth="288.0" style="-fx-background-color: #292929;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane layoutX="32.0" layoutY="42.0" prefHeight="112.0" prefWidth="127.0" style="-fx-background-color: #1e1e1e; -fx-border-radius: 48; -fx-background-radius: 48;" AnchorPane.bottomAnchor="364.0" AnchorPane.leftAnchor="72.0" AnchorPane.rightAnchor="89.0" AnchorPane.topAnchor="64.0">
+               <children>
+                  <AnchorPane fx:id="decibelSoundMeterParent" layoutX="158.0" layoutY="11.0" prefHeight="88.1" prefWidth="11.0" style="-fx-background-color: #424242; -fx-background-radius: 100; -fx-border-color: #fff59d; -fx-border-radius: 100;" AnchorPane.bottomAnchor="11.5" AnchorPane.leftAnchor="18.2" AnchorPane.topAnchor="12.4">
+<!--                     <padding>-->
+<!--                        <Insets bottom="2.0" left="2.0" right="2.0" top="2.0" />-->
+<!--                     </padding>-->
+                     <children>
+                        <StackPane style="-fx-border-color: #ff8a80;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                           <children>
+                              <Group fx:id="decibelSoundMeterGroup" StackPane.alignment="CENTER">
+                                 <children>
+                                    <AnchorPane fx:id="decibelSoundMeterShow" layoutX="100.0" layoutY="5.0" prefHeight="0.0" prefWidth="11.0" style="-fx-background-color: #ff8a80; -fx-border-color: #ff8a80; -fx-border-radius: 200; -fx-background-radius: 100; -fx-border-width: 1;" />
+                                 </children>
+                              </Group>
+                           </children>
+                        </StackPane>
+                     </children>
+                  </AnchorPane>
+                  <Button fx:id="btnRecordMainPage" layoutX="31.0" layoutY="32.0" mnemonicParsing="false" onAction="#startRecordingMainPage" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #81d4fa; -fx-background-radius: 100; -fx-border-radius: 100;" AnchorPane.bottomAnchor="15.6" AnchorPane.leftAnchor="31.8" AnchorPane.rightAnchor="15.2" AnchorPane.topAnchor="16.4">
+                     <font>
+                        <Font name="System Bold" size="13.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@icons-microphone.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+               </children>
+            </AnchorPane>
+            <Line endX="100.0" fill="#56564f" layoutX="144.0" layoutY="252.0" startX="330.0" stroke="#56564f" AnchorPane.leftAnchor="24.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="240.5" />
+            <Button fx:id="btnChooseFileMainPage" layoutX="112.0" layoutY="189.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#chooseFileMainPage" prefHeight="32.0" prefWidth="110.0" style="-fx-background-color: #505050; -fx-background-radius: 20;" text="فایل صوتی" textFill="#fafafa" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="80.5" AnchorPane.rightAnchor="97.5" AnchorPane.topAnchor="188.0">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons-plus.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+<!--            <Button fx:id="btnStreamVoice" layoutX="199.0" layoutY="14.0" mnemonicParsing="false" onAction="#startStreamRecordingMainPage" prefHeight="80.0" prefWidth="80.0" style="-fx-background-color: #bf1010; -fx-background-radius: 100; -fx-border-radius: 100;">-->
+<!--               <font>-->
+<!--                  <Font name="System Bold" size="13.0" />-->
+<!--               </font>-->
+<!--               <graphic>-->
+<!--                  <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                     <image>-->
+<!--                        <Image url="@icons-microphone.png" />-->
+<!--                     </image>-->
+<!--                  </ImageView>-->
+<!--               </graphic>-->
+<!--            </Button>-->
+            <Button fx:id="btnAddDocument" alignment="CENTER" layoutX="174.0" layoutY="256.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#addDocument" prefHeight="24.0" prefWidth="120.0" style="-fx-border-color: #fff59d; -fx-background-color: #52524b00; -fx-border-width: 1; -fx-border-radius: 4;" text="افزودن دسته" textAlignment="CENTER" textFill="#fff59d" AnchorPane.bottomAnchor="248.0" AnchorPane.leftAnchor="76.0" AnchorPane.rightAnchor="92.0" AnchorPane.topAnchor="261.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnDontSaveDocument" alignment="CENTER" layoutX="139.0" layoutY="502.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#dontSaveDocument" prefHeight="36.0" prefWidth="79.0" style="-fx-border-color: #ff8a80; -fx-background-color: #52524b00; -fx-border-width: 1; -fx-border-radius: 4;" text="انصراف" textAlignment="CENTER" textFill="#ff8a80" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="149.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="488.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons-multiply.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="btnSaveDocument" alignment="CENTER" layoutX="57.0" layoutY="489.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#saveDocument" prefHeight="36.0" prefWidth="72.0" style="-fx-border-color: #ccff90; -fx-background-color: #52524b00; -fx-border-width: 1; -fx-border-radius: 4;" text="ذخیره" textAlignment="CENTER" textFill="#ccff90" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="155.0" AnchorPane.topAnchor="488.0">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="12.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons-checkmark.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <GridPane fx:id="gridPaneDocument" alignment="CENTER" layoutX="20.0" layoutY="314.0" prefHeight="116.0" prefWidth="252.0" AnchorPane.bottomAnchor="122.0" AnchorPane.leftAnchor="14.0" AnchorPane.rightAnchor="22.0" AnchorPane.topAnchor="303.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="115.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="124.0" minWidth="10.0" prefWidth="124.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </children></AnchorPane>
+      <AnchorPane layoutX="556.0" layoutY="183.0" prefHeight="452.0" prefWidth="648.0" style="-fx-background-color: #e0e0e0; -fx-background-radius: 8; -fx-border-radius: 8;" AnchorPane.bottomAnchor="24.0" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="64.0">
+         <children>
+            <Label fx:id="lblDocumentName" alignment="CENTER_RIGHT" lineSpacing="10.0" prefHeight="25.0" prefWidth="60.0" style="-fx-font-weight: 700; -fx-font-size: 16; -fx-font-style: normal;" text="نام سند" textAlignment="RIGHT" textFill="#56564f" wrapText="true" AnchorPane.bottomAnchor="419.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="8.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ImageView fitHeight="14.0" fitWidth="12.6" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="404.3999996185303" AnchorPane.leftAnchor="619.0" AnchorPane.rightAnchor="16.399999618530273" AnchorPane.topAnchor="35.0">
+               <image>
+                  <Image url="@icons-planner.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblDocumentName1" alignment="CENTER" lineSpacing="10.0" prefHeight="18.0" prefWidth="38.0" style="-fx-font-weight: 700; -fx-font-size: 8; -fx-font-style: normal;" text="79/10/14" textAlignment="RIGHT" textFill="#56564f" wrapText="true" AnchorPane.bottomAnchor="401.0" AnchorPane.leftAnchor="573.0" AnchorPane.rightAnchor="37.0" AnchorPane.topAnchor="33.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="btnExportWord" alignment="CENTER" layoutX="110.0" layoutY="18.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#exportToWord" prefHeight="24.0" prefWidth="64.5" style="-fx-background-color: rgba(242, 232, 149, 0); -fx-border-color: #56564f; -fx-border-width: 1; -fx-border-radius: 8 0 0 8;" text="Word" textFill="#56564f" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="61.0" AnchorPane.rightAnchor="522.5" AnchorPane.topAnchor="8.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="10.0" fitWidth="8.2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons-download.png" />
+                     </image>
+                  </ImageView>
+               </graphic></Button>
+            <Button fx:id="btnExportPDF" alignment="CENTER" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#exportToPDF" prefHeight="24.0" prefWidth="54.5" style="-fx-background-color: rgba(242, 232, 149, 0); -fx-border-color: #56564f; -fx-border-width: 1; -fx-border-radius: 0 8 8 0;" text="PDF" textFill="#56564f" AnchorPane.bottomAnchor="420.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="585.5" AnchorPane.topAnchor="8.0">
+               <font>
+                  <Font name="System Bold" size="10.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="10.0" fitWidth="8.2" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@icons-download.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label fx:id="lblVoiceText" alignment="TOP_RIGHT" layoutX="259.0" layoutY="187.0" prefHeight="377.0" prefWidth="605.0" style="-fx-background-color: #00000000;" text="این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv این محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است  که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که در چند جمله در  لیست اسناد آوردهاین محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این  محتوای سند است که در چند جمله در لیست اسناد آورده می‌شود. این محتوای سند است که دv " textAlignment="RIGHT" wrapText="true" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="27.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="59.0">
+               <font>
+                  <Font size="14.0" />
+               </font></Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="btnBold" alignment="CENTER" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#makeBold" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="900.0" AnchorPane.rightAnchor="24.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="12.0" fitWidth="9.2" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-bold.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnItalic" alignment="CENTER" layoutX="864.0" layoutY="21.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#makeItalic" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="865.0" AnchorPane.rightAnchor="59.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="12.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-italic.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnUnderline" alignment="CENTER" layoutX="875.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#makeUnderline" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="830.0" AnchorPane.rightAnchor="94.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-underline.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnNumberedList" alignment="CENTER" layoutX="840.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#makeNumberedList" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="760.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-numbered-list.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnStrikethrough" alignment="CENTER" layoutX="840.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#makeLineThrough" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="795.0" AnchorPane.rightAnchor="129.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="13.0" fitWidth="13.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-strikethrough.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnIncreaseTextSize" alignment="CENTER" layoutX="770.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#increaseTextSize" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="708.0" AnchorPane.rightAnchor="216.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-plus-yellow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnTextSize" alignment="CENTER" layoutX="718.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="32.0" prefWidth="36.0" style="-fx-border-color: #fff59d; -fx-background-color: #52524b00; -fx-border-width: 1;" textFill="#52524b" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="673.0" AnchorPane.rightAnchor="251.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="11.1" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-textsize.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnDecreaseTextSize" alignment="CENTER" layoutX="718.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#decreaseTextSize" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="638.0" AnchorPane.rightAnchor="286.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-minus.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnUndo" alignment="CENTER" layoutX="648.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#undo" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="545.0" AnchorPane.rightAnchor="379.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-undo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnRedo" alignment="CENTER" layoutX="555.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#redo" prefHeight="32.0" prefWidth="36.0" style="-fx-background-color: #56564f; -fx-border-color: #fff59d; -fx-border-width: 1;" textFill="#56564f" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="580.0" AnchorPane.rightAnchor="344.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="10.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-redo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnChooseTextFile" alignment="CENTER" layoutX="683.0" layoutY="30.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#chooseTextFile" prefHeight="32.0" prefWidth="101.0" style="-fx-border-color: #fff59d; -fx-background-color: #52524b00; -fx-border-width: 1; -fx-border-radius: 4;" text="فایل متنی" textFill="#fff59d" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="288.0" AnchorPane.rightAnchor="571.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-plus-yellow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="btnSettingsMainPage" alignment="CENTER" layoutX="397.0" layoutY="21.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" onAction="#goToSettings" prefHeight="32.0" prefWidth="101.0" style="-fx-border-color: #fff59d; -fx-background-color: #52524b00; -fx-border-width: 1; -fx-border-radius: 4;" text="تنظیمات" textFill="#fff59d" AnchorPane.bottomAnchor="488.0" AnchorPane.leftAnchor="397.0" AnchorPane.rightAnchor="462.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="14.0" fitWidth="14.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-settings-yellow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>

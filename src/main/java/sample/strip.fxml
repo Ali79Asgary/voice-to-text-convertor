@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<?import javafx.scene.control.Button?>
+<AnchorPane fx:id="anchorPaneMainStrip" prefHeight="90.0" prefWidth="700.0" style="-fx-background-color: #2A2E37; -fx-background-radius: 10; -fx-border-color: #FFFF8D; -fx-border-radius: 10; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.StripController">
+    <Button fx:id="btnRecordStrip" alignment="CENTER" layoutX="315.0" layoutY="10.0" onAction="#startRecordingStrip" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #FFFF8D; -fx-border-width: 2; -fx-background-color: #2A2E37" text="شروع ضبط" textAlignment="CENTER" textFill="#b2b2b2">
+        <font>
+            <Font name="IRANSans" size="10.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnCloseStrip" alignment="CENTER" layoutX="223.0" layoutY="10.0" onAction="#closeStrip" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #FFFF8D; -fx-border-width: 2; -fx-background-color: #2A2E37" text="خروج" textAlignment="CENTER" textFill="#b2b2b2">
+        <font>
+            <Font name="IRANSans" size="10.0" />
+        </font>
+    </Button>
+    <Button fx:id="btnMagnifyStrip" alignment="CENTER" layoutX="405.0" layoutY="10.0" onAction="#magnifyStrip" prefHeight="70.0" prefWidth="70.0" style="-fx-border-color: #FFFF8D; -fx-border-width: 2; -fx-background-color: #2A2E37" text="بزرگنمایی" textAlignment="CENTER" textFill="#b2b2b2">
+        <font>
+            <Font name="IRANSans" size="10.0" />
+        </font>
+    </Button>
+    <Label fx:id="lblTimerStrip" alignment="CENTER" layoutX="14.0" layoutY="10.0" prefHeight="70.0" prefWidth="120.0" style="-fx-border-color: #FFFF8D; -fx-border-radius: 20; -fx-border-width: 2;" text="Label" textFill="#B2B2B2" />
+</AnchorPane>

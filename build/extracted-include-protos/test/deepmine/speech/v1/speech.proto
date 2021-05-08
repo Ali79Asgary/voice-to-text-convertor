@@ -1,0 +1,545 @@
+syntax = "proto3";
+
+package deepmine.speech.v1;
+
+option java_package = "ir.deepmine.speech.v1";
+option java_multiple_files = true;
+option java_outer_classname = "SpeechProto";
+
+// Service that implements DeepMine Cloud Speech API.
+service Speech {
+  // Performs synchronous non-streaming speech recognition:
+  //     receive results after all audio has been sent and processed.
+  rpc Recognize(RecognizeRequest) returns (RecognizeResponse) {}
+
+  // Performs synchronous client-to-server streaming speech recognition:
+  //     receive results after all audio has been streamed and processed.
+  rpc StreamingRecognize(stream StreamingRecognizeRequest) returns (RecognizeResponse) {}
+
+  // Performs synchronous bidirectional streaming speech recognition:
+  //     receive results while sending audio.
+  rpc BidiStreamingRecognize(stream StreamingRecognizeRequest) returns (stream StreamingRecognizeResponse) {}
+
+  // Performs synchronous non-streaming speech alignment:
+  //     receive results after all audio has been sent and processed.
+  rpc Align(AlignmentRequest) returns (AlignmentResponse) {}
+}
+
+// The top-level message sent by the client for the `Recognize` method.
+message RecognizeRequest {
+  // *Required* Provides information to the recognizer that specifies how to
+  // process the request.
+  RecognitionConfig config = 1;
+
+  // *Required* The audio data to be recognized.
+  RecognitionAudio audio = 2;
+
+  // *Required* The access token for authentication.
+  string access_token = 3;
+}
+
+// The top-level message sent by the client for the `StreamingRecognize` and
+// `BidiStreamingRecognize` methods. Multiple `StreamingRecognizeRequest` messages are
+// sent. The first message must contain a `streaming_config` message and must not contain `audio`
+// data. All subsequent messages must contain `audio` data and must not contain a
+// `streaming_config` message.
+message StreamingRecognizeRequest {
+  // The streaming request, which is either a streaming config or audio content.
+  oneof streaming_request {
+    // Provides information to the recognizer that specifies how to process the
+    // request. The first `StreamingRecognizeRequest` message must contain a
+    // `streaming_config`  message.
+    StreamingRecognitionConfig streaming_config = 1;
+
+    // The audio data to be recognized. Sequential chunks of audio data are sent
+    // in sequential `StreamingRecognizeRequest` messages. The first
+    // `StreamingRecognizeRequest` message must not contain `audio_content` data
+    // and all subsequent `StreamingRecognizeRequest` messages must contain
+    // `audio_content` data. The audio bytes must be encoded as specified in
+    // `RecognitionConfig`. Note: as with all bytes fields, protobuffers use a
+    // pure binary representation (not base64).
+    bytes audio_content = 2;
+  }
+}
+
+// Provides information to the recognizer that specifies how to process the request.
+message StreamingRecognitionConfig {
+  // *Required* Provides information to the recognizer that specifies how to
+  // process the request.
+  RecognitionConfig config = 1;
+
+  // *Required* The access token for authentication.
+  string access_token = 2;
+
+  // *Optional* If `false` or omitted, the recognizer will perform continuous
+  // recognition (continuing to wait for and process audio even if the user
+  // pauses speaking) until the client closes the input stream or
+  // until the maximum time limit has been reached. May return multiple
+  // `StreamingRecognitionResult`s with the `is_final` flag set to `true`.
+  //
+  // If `true`, the recognizer will detect a single spoken utterance. When it
+  // detects that the user has paused or stopped speaking, it will return an
+  // `END_OF_SINGLE_UTTERANCE` event and cease recognition. It will return no
+  // more than one `StreamingRecognitionResult` with the `is_final` flag set to
+  // `true`.
+  bool single_utterance = 3;
+
+  // *Optional* If `true`, interim results (tentative hypotheses) may be
+  // returned as they become available (these interim results are indicated with
+  // the `is_final=false` flag).
+  // If `false` or omitted, only `is_final=true` result(s) are returned.
+  bool interim_results = 4;
+
+  // *Optional* If `interim_results` was true, then the interim results will
+  // returned in `interim_results_interval_milliseconds` intervals in milliseconds.
+  // The minimum and default value for this parameter is `500 ms`.
+  int32 interim_results_interval_milliseconds = 5;
+}
+
+// Provides information to the recognizer that specifies how to process the
+// request.
+message RecognitionConfig {
+  // The encoding of the audio data sent in the request.
+  //
+  // All encodings support only 1 channel (mono) audio.
+  //
+  // For best results, the audio source should be captured and transmitted using
+  // a lossless encoding (`FLAC` or `LINEAR16`). The accuracy of the speech
+  // recognition can be reduced if lossy codecs are used to capture or transmit
+  // audio, particularly if background noise is present. Lossy codecs include
+  // `MULAW`, `AMR`, `AMR_WB`, and `OGG_OPUS`.
+  //
+  // The `FLAC` and `WAV` audio file formats include a header that describes the
+  // included audio content. You can request recognition for `WAV` files that
+  // contain either `LINEAR16` or `MULAW` encoded audio.
+  // If you send `FLAC` or `WAV` audio file format in
+  // your request, you do not need to specify an `AudioEncoding`; the audio
+  // encoding format is determined from the file header. If you specify
+  // an `AudioEncoding` when you send  send `FLAC` or `WAV` audio, the
+  // encoding configuration must match the encoding described in the audio
+  // header; otherwise the request returns an error.
+  enum AudioEncoding {
+    // Not specified.
+    ENCODING_UNSPECIFIED = 0;
+
+    // Uncompressed 16-bit signed little-endian samples (Linear PCM).
+    LINEAR16 = 1;
+
+    // `FLAC` (Free Lossless Audio Codec) is the recommended encoding because it is
+    // lossless--therefore recognition is not compromised--and
+    // requires only about half the bandwidth of `LINEAR16`. `FLAC` stream
+    // encoding supports 16-bit samples, however, not all fields in
+    // `STREAMINFO` are supported.
+    FLAC = 2;
+
+    // 8-bit samples that compand 14-bit audio samples using G.711 PCMU/mu-law.
+    MULAW = 3;
+
+    // Adaptive Multi-Rate Narrowband codec. `sample_rate_hertz` must be 8000.
+    AMR = 4;
+
+    // Adaptive Multi-Rate Wideband codec. `sample_rate_hertz` must be 16000.
+    AMR_WB = 5;
+
+    // Opus encoded audio frames in Ogg container
+    // ([OggOpus](https://wiki.xiph.org/OggOpus)).
+    // `sample_rate_hertz` must be one of 8000, 12000, 16000, 24000, or 48000.
+    OGG_OPUS = 6;
+  }
+
+  // Encoding of audio data sent in all `RecognitionAudio` messages.
+  // This field is optional for `FLAC` and `WAV` audio files and required
+  // for all other audio formats.
+  AudioEncoding encoding = 1;
+
+  // Sample rate in Hertz of the audio data sent in all
+  // `RecognitionAudio` messages. Valid values are: 8000-48000.
+  // 16000 is optimal. For best results, set the sampling rate of the audio
+  // source to 16000 Hz. If that's not possible, use the native sample rate of
+  // the audio source (instead of re-sampling).
+  // This field is optional for `FLAC` and `WAV` audio files and required
+  // for all other audio formats.
+  int32 sample_rate_hertz = 2;
+
+  // *Required* The language of the supplied audio as a
+  // [BCP-47](https://www.rfc-editor.org/rfc/bcp/bcp47.txt) language tag. Example: "en-US".
+  // See [Language Support](/speech-to-text/docs/languages)
+  // for a list of the currently supported language codes.
+  string language_code = 3;
+
+  // *Optional* Maximum number of recognition hypotheses to be returned.
+  // Specifically, the maximum number of `SpeechRecognitionAlternative` messages
+  // within each `SpeechRecognitionResult`.
+  // The server may return fewer than `max_alternatives`.
+  // Valid values are `0`-`30`. A value of `0` or `1` will return a maximum of
+  // one. If omitted, will return a maximum of one.
+  int32 max_alternatives = 4;
+
+  // *Optional* If set to `true`, the server will attempt to filter out
+  // profanities, replacing all but the initial character in each filtered word
+  // with asterisks, e.g. "f***". If set to `false` or omitted, profanities
+  // won't be filtered out.
+  bool profanity_filter = 5;
+
+  // *Optional* array of SpeechContext.
+  // A means to provide context to assist the speech recognition.
+  repeated SpeechContext speech_contexts = 6;
+
+  // *Optional* The number of channels in the input audio data.
+  // ONLY set this for MULTI-CHANNEL recognition.
+  // Valid values for LINEAR16 and FLAC are `1`-`8`.
+  // Valid values for OGG_OPUS are '1'-'254'.
+  // Valid value for MULAW, AMR, and AMR_WB is only `1`.
+  // If `0` or omitted, defaults to one channel (mono).
+  // Note: We only recognize the first channel by default.
+  // To perform independent recognition on each channel set
+  // `enable_separate_recognition_per_channel` to 'true'.
+  int32 audio_channel_count = 7;
+
+  // *Optional* If `true`, the top result includes a list of words and
+  // the start and end time offsets (timestamps) for those words. If
+  // `false`, no word-level time offset information is returned. The default is
+  // `false`.
+  bool enable_word_time_offsets = 8;
+
+  // *Optional* If 'true', adds punctuation to recognition result hypotheses.
+  // This feature is only available in select languages. Setting this for
+  // requests in other languages has no effect at all.
+  // The default 'false' value does not add punctuation to result hypotheses.
+  // Note: This is currently offered as an experimental service, complimentary
+  // to all users. In the future this may be exclusively available as a
+  // premium feature.
+  bool enable_automatic_punctuation = 9;
+
+  // This needs to be set to ‘true’ explicitly and `audio_channel_count` > 1
+  // to get each channel recognized separately. The recognition result will
+  // contain a `channel_tag` field to state which channel that result belongs
+  // to. If this is not true, we will only recognize the first channel. The
+  // request is billed cumulatively for all channels recognized:
+  // `audio_channel_count` multiplied by the length of the audio.
+  bool enable_separate_recognition_per_channel = 10;
+
+  // *Optional* If `true`, the top result includes a list of words and the
+  // confidence for those words. If `false`, no word-level confidence
+  // information is returned. The default is `false`.
+  bool enable_word_confidence = 11;
+
+  // *Optional* If 'true', enables speaker detection for each recognized word in
+  // the top alternative of the recognition result using a speaker_tag provided
+  // in the WordInfo.
+  // Note: When this is true, we send all the words from the beginning of the
+  // audio for the top alternative in every consecutive STREAMING responses.
+  // This is done in order to improve our speaker tags as our models learn to
+  // identify the speakers in the conversation over time.
+  // For non-streaming requests, the diarization results will be provided only
+  // in the top alternative of the FINAL SpeechRecognitionResult.
+  bool enable_speaker_diarization = 12;
+
+  // *Optional*
+  // If set, specifies the estimated number of speakers in the conversation.
+  // If not set, defaults to '2'.
+  // Ignored unless enable_speaker_diarization is set to true."
+  int32 diarization_speaker_count = 13;
+
+  // *Optional* Which model to select for the given request. Select the model
+  // best suited to your domain to get best results. If a model is not
+  // explicitly specified, then we auto-select a model based on the parameters
+  // in the RecognitionConfig.
+  // <table>
+  //   <tr>
+  //     <td><b>Model</b></td>
+  //     <td><b>Description</b></td>
+  //   </tr>
+  //   <tr>
+  //     <td><code>command_and_search</code></td>
+  //     <td>Best for short queries such as voice commands or voice search.</td>
+  //   </tr>
+  //   <tr>
+  //     <td><code>phone_call</code></td>
+  //     <td>Best for audio that originated from a phone call (typically
+  //     recorded at an 8khz sampling rate).</td>
+  //   </tr>
+  //   <tr>
+  //     <td><code>video</code></td>
+  //     <td>Best for audio that originated from video or includes multiple
+  //         speakers. Ideally the audio is recorded at a 16khz or greater
+  //         sampling rate. This is a premium model that costs more than the
+  //         standard rate.</td>
+  //   </tr>
+  //   <tr>
+  //     <td><code>default</code></td>
+  //     <td>Best for audio that is not one of the specific audio models.
+  //         For example, long-form audio. Ideally the audio is high-fidelity,
+  //         recorded at a 16khz or greater sampling rate.</td>
+  //   </tr>
+  // </table>
+  string model = 14;
+}
+
+// Provides "hints" to the speech recognizer to favor specific words and phrases
+// in the results.
+message SpeechContext {
+  // *Optional* A list of strings containing words and phrases "hints" so that
+  // the speech recognition is more likely to recognize them. This can be used
+  // to improve the accuracy for specific words and phrases, for example, if
+  // specific commands are typically spoken by the user. This can also be used
+  // to add additional words to the vocabulary of the recognizer.
+  repeated string phrases = 1;
+}
+
+// Contains audio data in the encoding specified in the `RecognitionConfig`.
+// Either `content` or `uri` must be supplied. Supplying both or neither
+// returns an error.
+message RecognitionAudio {
+  // The audio source, which is either inline content or a public uri.
+  oneof audio_source {
+    // The audio data bytes encoded as specified in
+    // `RecognitionConfig`. Note: as with all bytes fields, protobuffers use a
+    // pure binary representation, whereas JSON representations use base64.
+    bytes content = 1;
+
+    // URI that points to a file that contains audio data bytes as specified in
+    // `RecognitionConfig`. The file must not be compressed (for example, gzip).
+    string uri = 2;
+  }
+}
+
+// The only message returned to the client by the `Recognize` and `StreamingRecognize` methods.
+// It contains the result as zero or more sequential `SpeechRecognitionResult` messages.
+message RecognizeResponse {
+  // Output only. If set, returns a message that specifies the error for the operation.
+  string error_message = 1;
+
+  // Output only. Sequential list of transcription results corresponding to
+  // sequential portions of audio.
+  repeated SpeechRecognitionResult results = 2;
+}
+
+// `StreamingRecognizeResponse` is the only message returned to the client by
+// `BidiStreamingRecognize`. A series of zero or more `StreamingRecognizeResponse`
+// messages are streamed back to the client. If there is no recognizable
+// audio, and `single_utterance` is set to false, then no messages are streamed
+// back to the client.
+//
+// Here's an example of a series of ten `StreamingRecognizeResponse`s that might
+// be returned while processing audio:
+//
+// 1. results { alternatives { transcript: "tube" } stability: 0.01 }
+//
+// 2. results { alternatives { transcript: "to be a" } stability: 0.01 }
+//
+// 3. results { alternatives { transcript: "to be" } stability: 0.9 }
+//    results { alternatives { transcript: " or not to be" } stability: 0.01 }
+//
+// 4. results { alternatives { transcript: "to be or not to be" confidence: 0.92 }
+//              alternatives { transcript: "to bee or not to bee" }
+//              is_final: true }
+//
+// 5. results { alternatives { transcript: " that's" } stability: 0.01 }
+//
+// 6. results { alternatives { transcript: " that is" } stability: 0.9 }
+//    results { alternatives { transcript: " the question" } stability: 0.01 }
+//
+// 7. results { alternatives { transcript: " that is the question" confidence: 0.98 }
+//              alternatives { transcript: " that was the question" }
+//              is_final: true }
+//
+// Notes:
+//
+// - Only two of the above responses #4 and #7 contain final results; they are
+//   indicated by `is_final: true`. Concatenating these together generates the
+//   full transcript: "to be or not to be that is the question".
+//
+// - The others contain interim `results`. #3 and #6 contain two interim
+//   `results`: the first portion has a high stability and is less likely to
+//   change; the second portion has a low stability and is very likely to
+//   change. A UI designer might choose to show only high stability `results`.
+//
+// - The specific `stability` and `confidence` values shown above are only for
+//   illustrative purposes. Actual values may vary.
+//
+// - In each response, only one of these fields will be set:
+//     `error`,
+//     `speech_event_type`, or
+//     one or more (repeated) `results`.
+message StreamingRecognizeResponse {
+  // Indicates the type of speech event.
+  enum SpeechEventType {
+    // No speech event specified.
+    SPEECH_EVENT_UNSPECIFIED = 0;
+
+    // This event indicates that the server has detected the end of the user's
+    // speech utterance and expects no additional speech. Therefore, the server
+    // will not process additional audio (although it may subsequently return
+    // additional results). The client should stop sending additional audio
+    // data, half-close the gRPC connection, and wait for any additional results
+    // until the server closes the gRPC connection. This event is only sent if
+    // `single_utterance` was set to `true`, and is not used otherwise.
+    END_OF_SINGLE_UTTERANCE = 1;
+
+    // This event indicates that the server has detected an end-point in the
+    // user's speech. End-point is a considerable silence that maybe indicates
+    // the end of one single utterance or between word silence.
+    END_POINT = 2;
+
+    // This event indicates that the server has processed the whole user's speech.
+    // This means there wasn't any errors and limitation during processing of the
+    // speech. This event is sent just once and with the last response.
+    END_OF_SPEECH = 3;
+
+    // This event indicates that the data size limit is reach and the future
+    // incoming speech chunks will not be processed. So, the user should stop sending
+    // any other speech data.
+    DATA_SIZE_LIMIT = 4;
+
+    // This event indicates that server timeout happened for this request and
+    // server stops any future processing. This may happen for some reasons
+    // such as server overloading. In this case, also user should stop sending
+    // any other speech data.
+    TIMEOUT = 5;
+  }
+
+  // Output only. If set, returns a message that specifies the error for the operation.
+  string error_message = 1;
+
+  // Output only. This repeated list contains zero or more results that
+  // correspond to consecutive portions of the audio currently being processed.
+  // It contains zero or one `is_final=true` result (the newly settled portion),
+  // followed by zero or more `is_final=false` results (the interim results).
+  repeated StreamingRecognitionResult results = 2;
+
+  // Output only. Indicates the type of speech event.
+  SpeechEventType speech_event_type = 3;
+}
+
+// A streaming speech recognition result corresponding to a portion of the audio
+// that is currently being processed.
+message StreamingRecognitionResult {
+  // Output only. May contain one or more recognition hypotheses (up to the
+  // maximum specified in `max_alternatives`).
+  // These alternatives are ordered in terms of accuracy, with the top (first)
+  // alternative being the most probable, as ranked by the recognizer.
+  repeated SpeechRecognitionAlternative alternatives = 1;
+
+  // Output only. If `false`, this `StreamingRecognitionResult` represents an
+  // interim result that may change. If `true`, this is the final time the
+  // speech service will return this particular `StreamingRecognitionResult`,
+  // the recognizer will not return any further hypotheses for this portion of
+  // the transcript and corresponding audio.
+  bool is_final = 2;
+
+  // Output only. An estimate of the likelihood that the recognizer will not
+  // change its guess about this interim result. Values range from 0.0
+  // (completely unstable) to 1.0 (completely stable).
+  // This field is only provided for interim results (`is_final=false`).
+  // The default of 0.0 is a sentinel value indicating `stability` was not set.
+  float stability = 3;
+
+  // For multi-channel audio, this is the channel number corresponding to the
+  // recognized result for the audio from that channel.
+  // For audio_channel_count = N, its output values can range from '1' to 'N'.
+  int32 channel_tag = 5;
+}
+
+// A speech recognition result corresponding to a portion of the audio.
+message SpeechRecognitionResult {
+  // Output only. May contain one or more recognition hypotheses (up to the
+  // maximum specified in `max_alternatives`).
+  // These alternatives are ordered in terms of accuracy, with the top (first)
+  // alternative being the most probable, as ranked by the recognizer.
+  repeated SpeechRecognitionAlternative alternatives = 1;
+
+  // For multi-channel audio, this is the channel number corresponding to the
+  // recognized result for the audio from that channel.
+  // For audio_channel_count = N, its output values can range from '1' to 'N'.
+  int32 channel_tag = 2;
+}
+
+// Alternative hypotheses (a.k.a. n-best list).
+message SpeechRecognitionAlternative {
+  // Output only. Transcript text representing the words that the user spoke.
+  string transcript = 1;
+
+  // Output only. The confidence estimate between 0.0 and 1.0. A higher number
+  // indicates an estimated greater likelihood that the recognized words are
+  // correct. This field is set only for the top alternative of a non-streaming
+  // result or, of a streaming result where `is_final=true`.
+  // This field is not guaranteed to be accurate and users should not rely on it
+  // to be always provided.
+  // The default of 0.0 is a sentinel value indicating `confidence` was not set.
+  float confidence = 2;
+
+  // Output only. A list of word-specific information for each recognized word.
+  // Note: When `enable_speaker_diarization` is true, you will see all the words
+  // from the beginning of the audio.
+  repeated WordInfo words = 3;
+}
+
+// Word-specific information for recognized words.
+message WordInfo {
+  // Output only. Time offset relative to the beginning of the audio,
+  // and corresponding to the start of the spoken word.
+  // This field is only set if `enable_word_time_offsets=true` and only
+  // in the top hypothesis.
+  // This is an experimental feature and the accuracy of the time offset can
+  // vary.
+  float start_time = 1;
+
+  // Output only. Time offset relative to the beginning of the audio,
+  // and corresponding to the end of the spoken word.
+  // This field is only set if `enable_word_time_offsets=true` and only
+  // in the top hypothesis.
+  // This is an experimental feature and the accuracy of the time offset can
+  // vary.
+  float end_time = 2;
+
+  // Output only. The word corresponding to this set of information.
+  string word = 3;
+
+  // Output only. The confidence estimate between 0.0 and 1.0. A higher number
+  // indicates an estimated greater likelihood that the recognized words are
+  // correct. This field is set only for the top alternative of a non-streaming
+  // result or, of a streaming result where `is_final=true`.
+  // This field is not guaranteed to be accurate and users should not rely on it
+  // to be always provided.
+  // The default of 0.0 is a sentinel value indicating `confidence` was not set.
+  float confidence = 4;
+
+  // Output only. A distinct integer value is assigned for every speaker within
+  // the audio. This field specifies which one of those speakers was detected to
+  // have spoken this word. Value ranges from '1' to diarization_speaker_count.
+  // speaker_tag is set if enable_speaker_diarization = 'true' and only in the
+  // top alternative.
+  int32 speaker_tag = 5;
+}
+
+// ===================================  Alignment Section  ===================================
+
+// The top-level message sent by the client for the `Align` method.
+message AlignmentRequest {
+  // *Required* Provides information to the recognizer that specifies how to
+  // process the request.
+  RecognitionConfig config = 1;
+
+  // *Required* The audio data to be recognized.
+  RecognitionAudio audio = 2;
+
+  // *Required* The corresponding text for aligning with the audio.
+  string text = 3;
+
+  // *Required* The access token for authentication.
+  string access_token = 4;
+}
+
+// The only message returned to the client by the `Align` method. It
+// contains the result as a sequence of `WordInfo` messages.
+message AlignmentResponse {
+  // Output only. The confidence estimate between 0.0 and 1.0. A higher number
+  // indicates an estimated greater likelihood that the speech alignment to
+  // words are correct. This field is not guaranteed to be accurate and users
+  // should not rely on it to be always provided.
+  float confidence = 1;
+
+  // Output only. A list of word-specific information for each recognized word.
+  repeated WordInfo words = 2;
+}

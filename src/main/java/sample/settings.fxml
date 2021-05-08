@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="492.0" prefWidth="600.0" style="-fx-background-color: #292929; -fx-border-color: #707070; -fx-border-radius: 10; -fx-border-width: 2; -fx-background-radius: 10;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.SettingsController">
+   <children>
+      <Label alignment="CENTER" layoutX="283.0" layoutY="23.0" nodeOrientation="RIGHT_TO_LEFT" text="تنظیمات" textFill="#fff59d" AnchorPane.bottomAnchor="446.0" AnchorPane.leftAnchor="253.0" AnchorPane.rightAnchor="251.0" AnchorPane.topAnchor="16.0">
+         <font>
+            <Font name="System Bold" size="20.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="20.6" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@icons-settings-yellow.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Label>
+      <ImageView fx:id="btnCloseSettings" fitHeight="20.0" fitWidth="20.0" layoutX="566.0" layoutY="14.0" onMouseClicked="#closeSettings" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="452.0" AnchorPane.leftAnchor="560.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <image>
+            <Image url="@icons-close.png" />
+         </image>
+      </ImageView>
+      <CheckBox fx:id="checkBoxStream" alignment="CENTER_RIGHT" layoutX="254.0" layoutY="74.0" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#recordStream" prefHeight="48.0" prefWidth="360.0" style="-fx-border-color: #707070; -fx-border-width: 2; -fx-border-radius: 10;" text="استریم" textFill="#fafafa" AnchorPane.bottomAnchor="380.0" AnchorPane.leftAnchor="118.0" AnchorPane.rightAnchor="122.0" AnchorPane.topAnchor="64.0">
+         <font>
+            <Font name="System Bold" size="16.0" />
+         </font>
+         <padding>
+            <Insets bottom="30.0" left="16.0" right="16.0" />
+         </padding>
+      </CheckBox>
+   </children>
+</AnchorPane>

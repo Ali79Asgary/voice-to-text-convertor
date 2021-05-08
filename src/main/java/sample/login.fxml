@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="450.0" minWidth="600.0" prefHeight="540.0" prefWidth="960.0" stylesheets="@dark-theme.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.LoginController">
+    <children>
+<!--        style="-fx-background-color: #2A2E37;"-->
+<!--        style="-fx-text-fill: #B2B2B2; -fx-font-size : 12pt; -jfx-focus-color: #FFFF8D; -fx-text-fill: #FFFF8D;"-->
+<!--        style="-fx-text-fill: #B2B2B2; -fx-font-size : 12pt; -jfx-focus-color: #FFFF8D; -fx-text-fill: #FFFF8D;"-->
+<!--        style="-fx-text-fill: #B2B2B; -fx-background-color: #2A2E37; -fx-border-color: #FFFF8D; -fx-border-radius: 20px; -fx-background-radius: 20px; -fx-font-size: 12pt;"-->
+<!--        style="-fx-text-fill: #B2B2B; -fx-background-color: #2A2E37; -fx-border-color: #FFFF8D; -fx-border-radius: 20px; -fx-background-radius: 20px; -fx-font-size: 12pt;"-->
+        <VBox alignment="CENTER" prefHeight="540.0" prefWidth="960.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <AnchorPane maxHeight="400.0" maxWidth="600.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="960.0">
+                    <children>
+                        <TextField fx:id="username" alignment="CENTER_RIGHT" layoutX="146.0" layoutY="123.0" prefHeight="56.0" prefWidth="328.0" promptText="نام کاربری" style="-fx-background-color: #2A2E37; -fx-text-fill: #fafafa" AnchorPane.bottomAnchor="310.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="174.0">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </TextField>
+                        <PasswordField fx:id="password" alignment="CENTER_RIGHT" layoutX="146.0" layoutY="199.0" prefHeight="56.0" prefWidth="328.0" promptText="رمز عبور" style="-fx-background-color: #2A2E37; -fx-text-fill: #fafafa" AnchorPane.bottomAnchor="220.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="264.0">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </PasswordField>
+                        <Button fx:id="btnLogin" alignment="CENTER" layoutX="330.0" layoutY="266.0" onAction="#handleLoginButtonAction" prefHeight="35.0" prefWidth="100.0" style="-fx-background-color: #FFFF8D; -fx-text-fill: #2A2E37;" text="ورود" textAlignment="CENTER" textFill="#b2b2b2" AnchorPane.bottomAnchor="147.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="544.0" AnchorPane.topAnchor="354.0">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </Button>
+<!--                        <Button fx:id="btnCancel" alignment="CENTER" layoutX="147.0" layoutY="111.0" onAction="#handleCancelButtonAction" prefHeight="40.0" prefWidth="140.0" text="انصراف" textAlignment="CENTER" textFill="#b2b2b2">-->
+<!--                            <font>-->
+<!--                                <Font name="Arial" size="20.0" />-->
+<!--                            </font>-->
+<!--                        </Button>-->
+<!--                        <FontAwesomeIconView fill="#b2b2b2" glyphName="USER" layoutX="442.0" layoutY="154.0" size="35" text="" />-->
+<!--                        <FontAwesomeIconView fill="#b2b2b2" glyphName="LOCK" layoutX="269.0" layoutY="98.0" size="70" />-->
+<!--                        <FontAwesomeIconView fill="#b2b2b2" glyphName="KEY" layoutX="438.0" layoutY="229.0" size="35" text="" />-->
+<!--                        <Label fx:id="lblGoToSignUp" alignment="CENTER" layoutX="51.0" layoutY="56.0" onMouseClicked="#goToSignUp" prefHeight="35.0" prefWidth="331.0" text="حساب کاربری ندارید؟ ثبت نام" textAlignment="CENTER" textFill="#b2b2b2" />-->
+                        <Label fx:id="lblErrorSignUp" alignment="CENTER" layoutX="457.0" layoutY="488.0" prefHeight="40.0" prefWidth="328.0" text="" textAlignment="CENTER" textFill="#ca2726" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="488.0" />
+                        <Button fx:id="btnSignUp" alignment="CENTER" onAction="#goToSignUp" prefHeight="35.0" prefWidth="100.0" style="-fx-text-fill: #FFFF8D;" text="ثبت نام" textAlignment="CENTER" textFill="#b2b2b2" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="316.0" AnchorPane.rightAnchor="544.0" AnchorPane.topAnchor="421.0">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </Button>
+                        <Button fx:id="btnForgetPassword" alignment="CENTER" onAction="#handleForgetPassword" prefHeight="35.0" prefWidth="154.0" style="-fx-text-fill: #FFFF8D;" text="فراموشی رمز عبور" textAlignment="CENTER" textFill="#b2b2b2" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="490.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="421.0">
+                            <font>
+                                <Font name="Arial" size="20.0" />
+                            </font>
+                        </Button>
+                        <CheckBox contentDisplay="RIGHT" layoutX="551.0" layoutY="376.0" mnemonicParsing="false" nodeOrientation="RIGHT_TO_LEFT" style="-fx-font-size: 12pt;" text="مرا به خاطر بسپار" textFill="#FFFF8D" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="363.0" />
+                    </children>
+                </AnchorPane>
+            </children>
+        </VBox>
+    </children>
+</AnchorPane>
